@@ -16,4 +16,6 @@ FROM alpine:3.10.2
 COPY --from=builder /usr/local/scripts /usr/local/scripts
 COPY --from=builder /go/bin/grpcui /usr/bin/grpcui
 RUN apk update && apk add --no-cache bash
+RUN adduser -S -u 10001 user
+USER user
 CMD ["/usr/local/scripts/start.sh"]
