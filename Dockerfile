@@ -7,7 +7,7 @@ RUN apk update && apk add --no-cache git
 RUN go get -x github.com/fullstorydev/grpcui && \
     go install -x github.com/fullstorydev/grpcui/cmd/grpcui
 
-COPY scripts/start.sh /usr/local/scripts/
+COPY scripts/ /usr/local/scripts/
 RUN chmod +x /usr/local/scripts/*.sh
 
 EXPOSE 8080
