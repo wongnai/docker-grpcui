@@ -1,20 +1,19 @@
-FROM golang:1.12.4-stretch
+FROM golang:1.12.4-alpine AS builder
 
-MAINTAINER Suparit Krityakien <suparit@wongnai.com>
+LABEL maintainer="Suparit Krityakien <suparit@wongnai.com>"
 
-ENV TINI_VERSION v0.18.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
+RUN apk update && apk add --no-cache git
 
-RUN go get -x github.com/fullstorydev/grpcui
-RUN go install -x github.com/fullstorydev/grpcui/cmd/grpcui
+RUN go get -x github.com/fullstorydev/grpcui && \
+    go install -x github.com/fullstorydev/grpcui/cmd/grpcui
 
-COPY scripts/ /usr/local/scripts/
+COPY scripts/start.sh /usr/local/scripts/
 RUN chmod +x /usr/local/scripts/*.sh
-
-ENV PATH /usr/local/scripts/:$PATH
 
 EXPOSE 8080
 
-ENTRYPOINT ["/tini", "-s", "--"]
-CMD ["start.sh"]
+FROM alpine:3.10.2 
+COPY --from=builder /usr/local/scripts /usr/local/scripts
+COPY --from=builder /go/bin/grpcui /usr/bin/grpcui
+RUN apk update && apk add --no-cache bash
+CMD ["/usr/local/scripts/start.sh"]
