@@ -1,3 +1,8 @@
 #!/bin/bash
 
-grpcui -bind 0.0.0.0 -plaintext -port ${GRPCUI_PORT:-8080} ${GRPCUI_SERVER:-}
+: ${PROTOSET:=""}
+if [[ -f /protoset/service.protoset ]]; then
+    PROTOSET="-protoset /protoset/service.protoset"
+fi
+
+grpcui -bind 0.0.0.0 ${PROTOSET} -plaintext -port 8080 ${GRPCUI_SERVER:-}
