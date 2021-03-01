@@ -15,7 +15,8 @@ You should also enable reflection proto service in your grpc server so the grpc-
     docker run \
     -e GRPCUI_SERVER=172.17.0.1:6000 \
     -p 8080:8080 \
-    --mount type=bind,source="/my/service.protoset",target=/protoset/service.protoset
+    --mount type=bind,source="/my/service.protoset",target=/protoset/service.protoset \
+    kai5263499/grpcui
 
 ## Environment Variables
 | Variable      | Description                                   | Default Value |
