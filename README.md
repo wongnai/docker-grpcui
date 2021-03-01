@@ -12,10 +12,10 @@ You should also enable reflection proto service in your grpc server so the grpc-
 
 ## With a server using a protoset
 
-docker run \
-	-e GRPCUI_SERVER=172.17.0.1:6000 \
-	-p 8080:8080 \
-	--mount type=bind,source="/home/wwidner/code/deproot/src/github.com/PatchSimple/dataextract/.work/artifacts/protoset/dataextract.protoset",target=/protoset/service.protoset
+    docker run \
+    -e GRPCUI_SERVER=172.17.0.1:6000 \
+    -p 8080:8080 \
+    --mount type=bind,source="/my/service.protoset",target=/protoset/service.protoset
 
 ## Environment Variables
 | Variable      | Description                                   | Default Value |
